@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "main": "webpack.config.js",
+  "base_url": "https://fifteen-superheos.herokuapp.com",
+  "port": "8000",
   "engines": {
    "node": "6.2.1",
    "npm": "3.9.3"
