@@ -11,7 +11,7 @@
  },
  "scripts": {
    "start": "./node_modules/.bin/webpack",
-   "postinstall": "webpack"
+   "postinstall": "./node_modules/.bin/webpack"
  },
   "repository": {
     "type": "git",
