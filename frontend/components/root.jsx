@@ -6,7 +6,9 @@ import App from './app';
 const Root = ({ store }) => {
   return (
     <Provider store={ store }>
-      <Router path="/" component={App} />
+      <Router>
+        <App />
+      </Router>
     </Provider>
   );
 };
