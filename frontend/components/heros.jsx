@@ -5,7 +5,7 @@ class Heros extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = { heros: [], fetching: false, fetched: false, showBonus: false }
+    this.state = { heros: [], fetching: false, fetched: false, showBonus: true }
     this.geoTags = [
       { city: "NYC", lat: 40.730610, lng: -73.935242 },
       { city: "Boston", lat: 42.364506, lng: -71.038887 },
@@ -30,7 +30,7 @@ class Heros extends React.Component {
     this.setState({ heros: [], fetching: true })
     for(let i = 0; i < 1500; i += 100 ) {
       this.props.fetchAllHeros(i).then((result) => {
-        if (this.state.heros.length < 1300) {
+        if (this.state.heros.length < 1385) {
           this.setState({ heros: this.state.heros.concat(result.heros) })
         } else {
           this.setState({ heros: this.state.heros.concat(result.heros), fetching: false, fetched: true, showBonus: true})
@@ -39,10 +39,10 @@ class Heros extends React.Component {
     }
   }
 
-  getDistanse(a, b) {
+  getDistance(a, b) {
     if (a && b) {
-      debugger
-      return Math.round(google.maps.geometry.spherical.computeDistanceBetween(a, b) / 1000 / 1.60934)
+      const dist = Math.round(google.maps.geometry.spherical.computeDistanceBetween(a, b) / 1000 / 1.60934)
+      return dist;
     }
   }
 
@@ -62,24 +62,27 @@ class Heros extends React.Component {
     }
   }
 
+  includeHero(hero) {
+    if (this.bostonHeros.includes(hero)) {return true}
+    return false;
+  }
+
   helpBoston(hero) {
-    debugger
     const boston = new google.maps.LatLng(42.360082,-71.058880);
     const heroLocation = new google.maps.LatLng(hero.location.lat, hero.location.lng);
-    debugger
-    const distanse = this.getDistanse(boston, heroLocation);
-    if (distanse < 500) {
-      hero.location.distanceFromBoston = distanse
+    const distance = this.getDistance(boston, heroLocation);
+    if (distance && distance < 500 && !this.includeHero(hero)) {
+      hero.location.distanceFromBoston = distance
       this.bostonHeros.push(hero);
     }
   }
 
   getBostonHeros() {
-    if (this.bostonHeros.length > 0) {
+    if (this.bostonHeros.length > 0 && this.state.fetched) {
       const bostonHeros = this.sortByKeys(this.bostonHeros, "location", "distanceFromBoston", true);
       return (
         <ul className="boston-list">
-          <h3 className="heros-15-title text-left">Boston heros:</h3>
+          <h3 className="heros-15-title text-left">Save Boston:</h3>
           <h6>4. Magneto is wreaking havoc in Boston! find the heroes that are within 500 miles of Boston (sorted by closest)!</h6>
           {bostonHeros.map((hero, i) => {
             return (
@@ -90,7 +93,7 @@ class Heros extends React.Component {
                 </a>
                 <span className="hero-name">{hero.name}</span><span className="divider">•</span>
                 <span className="hero-location">located: {hero.location.city}</span><span className="divider">•</span>
-                <span className="hero-comics">distanse from Boston: <mark>{hero.location.distanceFromBoston}</mark></span><span className="divider">•</span>
+                <span className="hero-comics">distance from Boston: <mark>{hero.location.distanceFromBoston}</mark></span><span className="divider">•</span>
                 <span className="hero-details"><a href={hero.urls[0].url} target="_blank">Details</a></span>
               </li>
             )
@@ -111,17 +114,17 @@ class Heros extends React.Component {
   }
 
   getContent() {
-    console.log(this.getDistanse());
     const allHeros = this.sortByKeys(this.state.heros, "comics", "available").slice(0, 15);
+    allHeros.forEach((hero) => {
+    })
     this.updatedHeros = [];
-    if (allHeros.length > 0) {
+    if (allHeros.length > 0 && this.state.fetched) {
       return (
         <ul className="general-list">
           <h3 className="heros-15-title text-left">15 most popular superheros:</h3>
           <h6>1. Retrieve the 15 most popular super heroes based on the amount of comics they have appeared in</h6>
           <h6>2. Sort the heroes in descending order</h6>
           {allHeros.map((hero, i) => {
-            debugger
             hero.location = this.geoTags[i]
             this.updatedHeros.push(hero)
             this.helpBoston(hero);
@@ -133,7 +136,7 @@ class Heros extends React.Component {
                 </a>
                 <span className="hero-name">{hero.name}</span><span className="divider">•</span>
                 <span className="hero-location">located: {hero.location.city}</span><span className="divider">•</span>
-                <span className="hero-comics">number of comics: <mark>{hero.comics.available}</mark></span><span className="divider">•</span>
+                <span className="hero-comics">amount of comics: <mark>{hero.comics.available}</mark></span><span className="divider">•</span>
                 <span className="hero-details"><a href={hero.urls[0].url} target="_blank">Details</a></span>
               </li>
             )
@@ -183,8 +186,6 @@ class Heros extends React.Component {
             <div className="spinner">
               <i className="fa fa-spinner fa-pulse fa-2x fa-fw center-block"></i>
             </div>
-          <div>{this.getBostonHeros()}</div>
-          {this.getBonusForm()}
         </div>
       );
     }

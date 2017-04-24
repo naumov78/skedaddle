@@ -2642,6 +2642,7 @@ input[type="search"] {
 }
 .form-group {
   margin-bottom: 15px;
+  padding-top: 15px;
 }
 .radio,
 .checkbox {
@@ -7024,7 +7025,6 @@ a.list-group-item-danger.active:focus {
 }
 .hero-line {
   margin-top: 15px;
-
   font-size: 16px;
 }
 
@@ -7034,7 +7034,6 @@ a.list-group-item-danger.active:focus {
 
 .btn-container {
   margin: 0 auto;
-  // margin-top: 200px;
 }
 
 .general-list {
@@ -7045,12 +7044,15 @@ a.list-group-item-danger.active:focus {
   padding-top: 20px;
   padding-bottom: 40px;
 }
+
 #form-title {
   margin-left: 90px;
 }
+
 #form-subtitle {
   padding-bottom: 20px;
 }
+
 .heros-15-title {
     margin-left: 90px;
     padding-bottom: 10px;
@@ -7068,4 +7070,9 @@ a.list-group-item-danger.active:focus {
 
 .main-screen {
   padding-top: 200px;
+}
+
+.footer-text {
+  margin-top: 20px;
+  padding-bottom: 40px;
 }
