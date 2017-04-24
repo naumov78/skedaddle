@@ -1,69 +1,97 @@
 import React from 'react';
-
-// var client = redis.createClient();
+import CoordForm from './coord_form';
 
 class Heros extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = { heros: [], fetching: false }
-    this.geoTags = {
-      "NYC": [40.730610, -73.935242],
-      "Boston": [42.364506, -71.038887],
-      "DC": [38.894207, -77.035507],
-      "Chicago": [41.881832, -87.623177],
-      "Indianapolis": [39.832081, -86.145454],
-      "LA": [34.052235, -118.243683],
-      "SF": [37.733795, -122.446747],
-      "Dallas": [32.897480, -97.040443],
-      "Denver": [39.742043, -104.991531],
-      "Seattle": [47.608013, -122.335167],
-      "New Orleans": [29.951065, -90.071533],
-      "Orlando": [28.538336, -81.379234],
-      "Baltimore": [39.299236, -76.609383],
-      "Minneapolis": [44.986656, -93.258133],
-      "Cleveland": [41.505493, -81.681290]
-    }
-    // this.redis = require('redis');
+    this.state = { heros: [], fetching: false, fetched: false, showBonus: false }
+    this.geoTags = [
+      { city: "NYC", lat: 40.730610, lng: -73.935242 },
+      { city: "Boston", lat: 42.364506, lng: -71.038887 },
+      { city: "DC", lat: 38.894207, lng: -77.035507 },
+      { city: "Chicago", lat: 41.881832, lng: -87.623177 },
+      { city: "Indianapolis", lat: 39.832081, lng: -86.145454 },
+      { city: "LA", lat: 34.052235, lng: -118.243683 },
+      { city: "SF", lat: 37.733795, lng: -122.446747 },
+      { city: "Dallas", lat: 32.897480, lng: -97.040443 },
+      { city: "Denver", lat: 39.742043, lng: -104.991531 },
+      { city: "Seattle", lat: 47.608013, lng: -122.335167 },
+      { city: "New Orleans", lat: 29.951065, lng: -90.071533 },
+      { city: "Orlando", lat: 28.538336, lng: -81.379234 },
+      { city: "Baltimore", lat: 39.299236, lng: -76.609383 },
+      { city: "Minneapolis", lat: 44.986656, lng: -93.258133 },
+      { city: "Cleveland", lat: 41.505493, lng: -81.681290 }
+    ]
+    this.bostonHeros = [];
   }
 
   getHeros() {
     this.setState({ heros: [], fetching: true })
     for(let i = 0; i < 1500; i += 100 ) {
       this.props.fetchAllHeros(i).then((result) => {
-        console.log(this.state.heros.length);
         if (this.state.heros.length < 1300) {
           this.setState({ heros: this.state.heros.concat(result.heros) })
         } else {
-          debugger
-          this.setState({ heros: this.state.heros.concat(result.heros), fetching: false })
+          this.setState({ heros: this.state.heros.concat(result.heros), fetching: false, fetched: true, showBonus: true})
         }
       })
     }
   }
 
+  getDistanse(a, b) {
+    if (a && b) {
+      debugger
+      return Math.round(google.maps.geometry.spherical.computeDistanceBetween(a, b) / 1000 / 1.60934)
+    }
+  }
 
+  sortByKeys(array, key1, key2, desc) {
+    if (desc) {
+      return array.sort((a, b) => {
+          const x = a[key1][key2];
+          const y = b[key1][key2];
+          return ((x > y) ? 1 : ((x < y) ? -1 : 0));
+      });
+    } else {
+      return array.sort((a, b) => {
+          const x = a[key1][key2];
+          const y = b[key1][key2];
+          return ((x < y) ? 1 : ((x > y) ? -1 : 0));
+      });
+    }
+  }
 
-  sortByKeys(array, key1, key2) {
-    return array.sort((a, b) => {
-        const x = a[key1][key2];
-        const y = b[key1][key2];
-        return ((x < y) ? 1 : ((x > y) ? -1 : 0));
-    });
-}
-
-
-
-  getContent() {
-    const allHeros = this.sortByKeys(this.state.heros, "comics", "available").slice(0, 15);
+  helpBoston(hero) {
     debugger
-    if (allHeros.length > 0) {
+    const boston = new google.maps.LatLng(42.360082,-71.058880);
+    const heroLocation = new google.maps.LatLng(hero.location.lat, hero.location.lng);
+    debugger
+    const distanse = this.getDistanse(boston, heroLocation);
+    if (distanse < 500) {
+      hero.location.distanceFromBoston = distanse
+      this.bostonHeros.push(hero);
+    }
+  }
+
+  getBostonHeros() {
+    if (this.bostonHeros.length > 0) {
+      const bostonHeros = this.sortByKeys(this.bostonHeros, "location", "distanceFromBoston", true);
       return (
-        <ul>
-          {allHeros.map((hero, i) => {
+        <ul className="boston-list">
+          <h3 className="heros-15-title text-left">Boston heros:</h3>
+          <h6>4. Magneto is wreaking havoc in Boston! find the heroes that are within 500 miles of Boston (sorted by closest)!</h6>
+          {bostonHeros.map((hero, i) => {
             return (
-              <li key={i}>
-                {hero.name} - number of comics {hero.comics.available}
+              <li className="hero-line" key={i}>
+                {this.getNumber(i)}
+                <a href={hero.urls[0].url} target="_blank">
+                  <img className="img-circle" src={hero.thumbnail.path + '.' + hero.thumbnail.extension} />
+                </a>
+                <span className="hero-name">{hero.name}</span><span className="divider">•</span>
+                <span className="hero-location">located: {hero.location.city}</span><span className="divider">•</span>
+                <span className="hero-comics">distanse from Boston: <mark>{hero.location.distanceFromBoston}</mark></span><span className="divider">•</span>
+                <span className="hero-details"><a href={hero.urls[0].url} target="_blank">Details</a></span>
               </li>
             )
           })}
@@ -74,23 +102,89 @@ class Heros extends React.Component {
     }
   }
 
+  getNumber(i) {
+    if (i < 9) {
+      return <span>&nbsp;&nbsp;{i + 1}.&nbsp;&nbsp;</span>
+    } else {
+      return <span>{i + 1}.&nbsp;&nbsp;</span>
+    }
+  }
+
+  getContent() {
+    console.log(this.getDistanse());
+    const allHeros = this.sortByKeys(this.state.heros, "comics", "available").slice(0, 15);
+    this.updatedHeros = [];
+    if (allHeros.length > 0) {
+      return (
+        <ul className="general-list">
+          <h3 className="heros-15-title text-left">15 most popular superheros:</h3>
+          <h6>1. Retrieve the 15 most popular super heroes based on the amount of comics they have appeared in</h6>
+          <h6>2. Sort the heroes in descending order</h6>
+          {allHeros.map((hero, i) => {
+            debugger
+            hero.location = this.geoTags[i]
+            this.updatedHeros.push(hero)
+            this.helpBoston(hero);
+            return (
+              <li className="hero-line" key={i}>
+                {this.getNumber(i)}
+                <a href={hero.urls[0].url} target="_blank">
+                  <img className="img-circle" src={hero.thumbnail.path + '.' + hero.thumbnail.extension} />
+                </a>
+                <span className="hero-name">{hero.name}</span><span className="divider">•</span>
+                <span className="hero-location">located: {hero.location.city}</span><span className="divider">•</span>
+                <span className="hero-comics">number of comics: <mark>{hero.comics.available}</mark></span><span className="divider">•</span>
+                <span className="hero-details"><a href={hero.urls[0].url} target="_blank">Details</a></span>
+              </li>
+            )
+          })}
+        </ul>
+      )
+    } else {
+      return null;
+    }
+  }
+
+  getButton() {
+    if (!this.state.fetched) {
+      return (
+        <div className="main-screen">
+            <button className="btn btn-primary center-block" onClick={() => this.getHeros()}>Get Heros</button>
+        </div>
+      )
+    } else {
+      return null;
+    }
+  }
+
+  getBonusForm() {
+    if (this.state.showBonus) {
+      return <CoordForm heros={this.updatedHeros} />
+    } else {
+      return null;
+    }
+  }
 
   render() {
-    console.log(this.geoTags);
-    debugger
     if (!this.state.fetching) {
       return (
-        <div>Hello world!
-          <div><button onClick={() => this.getHeros()}>Get Heros</button></div>
+        <div className="container-fluid">
+            {this.getButton()}
           <div>{this.getContent()}</div>
+
+          <div>{this.getBostonHeros()}</div>
+          {this.getBonusForm()}
         </div>
       );
     } else {
-      debugger
       return (
-        <div>Hello world!
-          <div><button onClick={() => this.getHeros()}>Get Heros</button></div>
-          <div>fetching heros...</div>
+        <div className="container-fluid">
+            {this.getButton()}
+            <div className="spinner">
+              <i className="fa fa-spinner fa-pulse fa-2x fa-fw center-block"></i>
+            </div>
+          <div>{this.getBostonHeros()}</div>
+          {this.getBonusForm()}
         </div>
       );
     }

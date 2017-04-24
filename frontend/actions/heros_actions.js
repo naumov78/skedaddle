@@ -10,7 +10,6 @@ export const receiveHeros = (data) => {
   })
 }
 
-
 export const fetchAllHeros = (offset) => {
   return (dispatch) => {
     return APIUtil.fetchAllHeros(offset).then((result) => {
