@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "start": "node index"
-  },
+  "engines": {
+   "node": "6.2.1",
+   "npm": "3.9.3"
+ },
+ "scripts": {
+   "postinstall": "webpack"
+ },
   "repository": {
     "type": "git",
     "url": "github.com/naumov78/skedaddle.git"

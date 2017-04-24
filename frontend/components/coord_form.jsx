@@ -49,7 +49,7 @@ class CoordForm extends React.Component {
     if (this.state.lat !== "" && this.state.lng !== "") {
       this.setState({ loading: true });
       const newCoords = {lat: this.state.lat, lng: this.state.lng}
-      this.setState({ coords: newCoords, userPoint: this.state.address, loading: true, lat: '', lng: '', error: fasle }, this.updateHeros);
+      this.setState({ coords: newCoords, userPoint: this.state.address, loading: true, lat: '', lng: '', error: false }, this.updateHeros);
     } else if ((this.state.lat === '' && this.state.lng !== '') || (this.state.lat !== '' && this.state.lng === '')) {
       this.setState({ error: true })
     } else {
@@ -137,7 +137,7 @@ class CoordForm extends React.Component {
     if (this.state.error) {
       return <span className="text-warning text-center">please, enter both coordinates</span>
     } else {
-      return null;
+      return <span className="text-warning text-center">&nbsp;</span>
     }
   }
 

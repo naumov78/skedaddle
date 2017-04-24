@@ -5,7 +5,7 @@ class Heros extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = { heros: [], fetching: false, fetched: false, showBonus: true }
+    this.state = { heros: [], fetching: false, fetched: false, showBonus: false }
     this.geoTags = [
       { city: "NYC", lat: 40.730610, lng: -73.935242 },
       { city: "Boston", lat: 42.364506, lng: -71.038887 },
@@ -82,7 +82,7 @@ class Heros extends React.Component {
       const bostonHeros = this.sortByKeys(this.bostonHeros, "location", "distanceFromBoston", true);
       return (
         <ul className="boston-list">
-          <h3 className="heros-15-title text-left">Save Boston:</h3>
+          <h3 className="heros-15-title text-left">Saving Boston:</h3>
           <h6>4. Magneto is wreaking havoc in Boston! find the heroes that are within 500 miles of Boston (sorted by closest)!</h6>
           {bostonHeros.map((hero, i) => {
             return (
@@ -127,6 +127,7 @@ class Heros extends React.Component {
           {allHeros.map((hero, i) => {
             hero.location = this.geoTags[i]
             this.updatedHeros.push(hero)
+
             this.helpBoston(hero);
             return (
               <li className="hero-line" key={i}>
