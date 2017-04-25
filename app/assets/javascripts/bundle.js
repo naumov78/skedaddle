@@ -13263,7 +13263,7 @@ var CoordForm = function (_React$Component) {
               _react2.default.createElement(
                 'button',
                 { className: 'btn btn-default', type: 'submit' },
-                'Find Heros'
+                'Find Heroes'
               ),
               this.getLoading()
             )
@@ -13531,7 +13531,7 @@ var Heros = function (_React$Component) {
           _react2.default.createElement(
             'h3',
             { className: 'heros-15-title text-left' },
-            '15 most popular super heros:'
+            '15 most popular super heroes:'
           ),
           _react2.default.createElement(
             'h6',
@@ -13623,7 +13623,7 @@ var Heros = function (_React$Component) {
             { className: 'btn btn-primary center-block', onClick: function onClick() {
                 return _this5.getHeros();
               } },
-            'Get Heros'
+            'Get Heroes'
           )
         );
       } else {

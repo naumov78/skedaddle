@@ -121,7 +121,7 @@ class Heros extends React.Component {
     if (allHeros.length > 0 && this.state.fetched) {
       return (
         <ul className="general-list">
-          <h3 className="heros-15-title text-left">15 most popular super heros:</h3>
+          <h3 className="heros-15-title text-left">15 most popular super heroes:</h3>
           <h6>1. Retrieve the 15 most popular super heroes based on the amount of comics they have appeared in</h6>
           <h6>2. Sort the heroes in descending order</h6>
           {allHeros.map((hero, i) => {
@@ -153,7 +153,7 @@ class Heros extends React.Component {
     if (!this.state.fetched) {
       return (
         <div className="main-screen">
-            <button className="btn btn-primary center-block" onClick={() => this.getHeros()}>Get Heros</button>
+            <button className="btn btn-primary center-block" onClick={() => this.getHeros()}>Get Heroes</button>
         </div>
       )
     } else {
