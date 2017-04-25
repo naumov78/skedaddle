@@ -3,19 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "webpack.config.js",
-  "base_url": "https://fifteen-superheos.herokuapp.com",
-  "port": "8000",
   "engines": {
-   "node": "6.2.1",
-   "npm": "3.9.3"
- },
- "scripts": {
-   "start": "./node_modules/.bin/webpack",
-   "postinstall": "./node_modules/.bin/webpack"
- },
+    "node": "6.2.1",
+    "npm": "3.9.3"
+  },
+  "scripts": {
+    "start": "./node_modules/.bin/webpack",
+    "postinstall": "./node_modules/.bin/webpack"
+  },
   "repository": {
-    "type": "git",
-    "url": "github.com/naumov78/skedaddle.git"
+    "type": "git"
   },
   "author": "Aleksei Naumov",
   "license": "ISC",
@@ -31,7 +28,6 @@
     "react-redux": "^5.0.4",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
-    "redis": "^2.7.1",
     "redux": "^3.6.0",
     "redux-logger": "^3.0.1",
     "redux-thunk": "^2.2.0",

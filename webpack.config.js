@@ -31,6 +31,11 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx']
   },
+  node: {
+   net: "empty",
+   tls: "empty",
+   hiredis: "empty"
+  },
   module: {
     loaders: [
       {
