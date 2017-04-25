@@ -170,7 +170,7 @@ class CoordForm extends React.Component {
             <div className="form-group">Or choose the location:</div>
               <PlacesAutocomplete inputProps={inputProps} />
             <div className="form-group">
-              <button className="btn btn-default" type="submit">Submit</button>{this.getLoading()}
+              <button className="btn btn-default" type="submit">Find Heros</button>{this.getLoading()}
             </div>
           </form>
           {this.getContent()}
