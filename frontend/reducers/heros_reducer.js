@@ -10,6 +10,7 @@ const HerosReducer = (state = initState, action) => {
   switch (action.type) {
     case RECEIVE_HEROS:
       const newState = Object.assign({}, state, { heros: action.heros })
+      return newState;
     default:
       return state;
   }
