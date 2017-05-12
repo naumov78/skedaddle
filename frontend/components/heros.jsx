@@ -83,7 +83,7 @@ class Heros extends React.Component {
       return (
         <ul className="boston-list">
           <h3 className="heros-15-title text-left">Saving Boston:</h3>
-          <h6>4. Magneto is wreaking havoc in Boston! find the heroes that are within 500 miles of Boston (sorted by closest)!</h6>
+          <h6>3. Magneto is wreaking havoc in Boston! Find the heroes that are within 500 miles of Boston (sorted by closest)!</h6>
           {bostonHeros.map((hero, i) => {
             return (
               <li className="hero-line" key={i}>

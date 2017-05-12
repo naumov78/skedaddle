@@ -159,7 +159,7 @@ class CoordForm extends React.Component {
       <div>
         <ul>
           <h3 id="form-title" className="heros-15-title text-left">Bonus:</h3>
-          <h6 id="form-subtitle">5. By implementing a simple UI, give the user the ability to input any coordinates or location (google maps autocomplete) and see which of the top 15 superheros are nearest.</h6>
+          <h6 id="form-subtitle">4. By implementing a simple UI, give the user the ability to input any coordinates or location (google maps autocomplete) and see which of the top 15 superheros are nearest.</h6>
           <form className="location-form" onSubmit={this.handleFormSubmit}>
             <div className="input-group">
               <div className="form-group">Enter coordinates</div>

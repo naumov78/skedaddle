@@ -13230,7 +13230,7 @@ var CoordForm = function (_React$Component) {
           _react2.default.createElement(
             'h6',
             { id: 'form-subtitle' },
-            '5. By implementing a simple UI, give the user the ability to input any coordinates or location (google maps autocomplete) and see which of the top 15 superheros are nearest.'
+            '4. By implementing a simple UI, give the user the ability to input any coordinates or location (google maps autocomplete) and see which of the top 15 superheros are nearest.'
           ),
           _react2.default.createElement(
             'form',
@@ -13432,7 +13432,7 @@ var Heros = function (_React$Component) {
           _react2.default.createElement(
             'h6',
             null,
-            '4. Magneto is wreaking havoc in Boston! find the heroes that are within 500 miles of Boston (sorted by closest)!'
+            '3. Magneto is wreaking havoc in Boston! Find the heroes that are within 500 miles of Boston (sorted by closest)!'
           ),
           bostonHeros.map(function (hero, i) {
             return _react2.default.createElement(
