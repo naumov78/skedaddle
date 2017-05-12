@@ -2,10 +2,10 @@
 
 Superheroes is small web app that allows to get the list of fifteen most popular superheroes using Marvel API.
 It assigns 15 cities to the heroes and sorts the list in descending order.
-In "Saving Boston" app renders all superheroes within 500 miles distance from Boston, sorted by distance.
-And as a bonus app has a User Interface that allows to render superheroes on users coordinates or location input using Google Maps API.
+In "Saving Boston" app renders all superheroes within 500 miles from Boston, sorted by distance.
+As a bonus a User Interface was implemented and it allows to render superheroes on users coordinates or location input using Google Maps API.
 
-Superheroes are build on React.js and Redux and using Marvel and Google Maps APIs.
+Superheroes are built on React.js and Redux and using Marvel and Google Maps APIs.
 
 
 
@@ -36,7 +36,7 @@ getHeros() {
 
 Mission "Saving Boston" was implemented in the following way:
 
-All the heroes within 500 mile were found
+All the heroes within 500 mile were found and pushed to bostonHeros array
 ```javascript
 helpBoston(hero) {
   const boston = new google.maps.LatLng(42.360082,-71.058880);
@@ -101,9 +101,6 @@ getBostonHeros() {
   }
 }
 ```
-
-
-
 
 ##### Index page
 ![index](/app/assets/images/heroes.png)
